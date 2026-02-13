@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#0f1629"/>
+      <stop offset="100%" stop-color="#0a0e1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="300" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="accent2" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-lg">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="320" fill="url(#bg)"/>
+  <rect width="1200" height="320" fill="url(#grid)"/>
+
+  <!-- Decorative data flow lines -->
+  <g opacity="0.15">
+    <line x1="100" y1="0" x2="300" y2="320" stroke="#22d3ee" stroke-width="1"/>
+    <line x1="200" y1="0" x2="400" y2="320" stroke="#22d3ee" stroke-width="1"/>
+    <line x1="800" y1="0" x2="600" y2="320" stroke="#6366f1" stroke-width="1"/>
+    <line x1="900" y1="0" x2="700" y2="320" stroke="#6366f1" stroke-width="1"/>
+    <line x1="1000" y1="0" x2="850" y2="320" stroke="#a78bfa" stroke-width="1"/>
+    <line x1="1100" y1="0" x2="950" y2="320" stroke="#a78bfa" stroke-width="1"/>
+  </g>
+
+  <!-- Database icon left (source) -->
+  <g transform="translate(180, 120)" opacity="0.6">
+    <ellipse cx="0" cy="0" rx="50" ry="16" stroke="#22d3ee" stroke-width="1.5" fill="none"/>
+    <line x1="-50" y1="0" x2="-50" y2="55" stroke="#22d3ee" stroke-width="1.5"/>
+    <line x1="50" y1="0" x2="50" y2="55" stroke="#22d3ee" stroke-width="1.5"/>
+    <ellipse cx="0" cy="55" rx="50" ry="16" stroke="#22d3ee" stroke-width="1.5" fill="none"/>
+    <ellipse cx="0" cy="27" rx="50" ry="16" stroke="#22d3ee" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <text x="0" y="90" text-anchor="middle" fill="#22d3ee" font-family="monospace" font-size="11" letter-spacing="2" opacity="0.7">SOURCE</text>
+  </g>
+
+  <!-- Arrow / data flow -->
+  <g filter="url(#glow)">
+    <line x1="270" y1="148" x2="420" y2="148" stroke="url(#accent)" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+    <polygon points="420,142 435,148 420,154" fill="#22d3ee" opacity="0.8"/>
+  </g>
+
+  <!-- Shield icon (anonymization) -->
+  <g transform="translate(490, 115)" filter="url(#glow)" opacity="0.7">
+    <path d="M0,-30 L25,-18 L25,10 C25,30 0,42 0,42 C0,42 -25,30 -25,10 L-25,-18 Z" stroke="url(#accent2)" stroke-width="1.5" fill="none"/>
+    <path d="M-8,2 L-2,8 L10,-6" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="60" text-anchor="middle" fill="#a78bfa" font-family="monospace" font-size="9" letter-spacing="1.5" opacity="0.7">ANONYMIZE</text>
+  </g>
+
+  <!-- Arrow right -->
+  <g filter="url(#glow)">
+    <line x1="545" y1="148" x2="690" y2="148" stroke="url(#accent2)" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+    <polygon points="690,142 705,148 690,154" fill="#6366f1" opacity="0.8"/>
+  </g>
+
+  <!-- Database icon right (target) -->
+  <g transform="translate(780, 120)" opacity="0.6">
+    <ellipse cx="0" cy="0" rx="50" ry="16" stroke="#6366f1" stroke-width="1.5" fill="none"/>
+    <line x1="-50" y1="0" x2="-50" y2="55" stroke="#6366f1" stroke-width="1.5"/>
+    <line x1="50" y1="0" x2="50" y2="55" stroke="#6366f1" stroke-width="1.5"/>
+    <ellipse cx="0" cy="55" rx="50" ry="16" stroke="#6366f1" stroke-width="1.5" fill="none"/>
+    <ellipse cx="0" cy="27" rx="50" ry="16" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <text x="0" y="90" text-anchor="middle" fill="#6366f1" font-family="monospace" font-size="11" letter-spacing="2" opacity="0.7">TARGET</text>
+  </g>
+
+  <!-- Main title -->
+  <text x="600" y="52" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="13" letter-spacing="6" font-weight="300" opacity="0.5">DATABASE CLONING &amp; ANONYMIZATION</text>
+
+  <!-- Logo text -->
+  <text x="970" y="160" text-anchor="start" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" letter-spacing="-1" filter="url(#glow-lg)">clonio</text>
+
+  <!-- Tagline -->
+  <text x="974" y="185" text-anchor="start" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="14" letter-spacing="0.5" font-weight="400">GDPR-compliant dev data, automated.</text>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="316" width="1200" height="4" fill="url(#accent)" opacity="0.6"/>
+</svg>
