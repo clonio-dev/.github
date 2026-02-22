@@ -32,8 +32,8 @@ Clonio solves this: it reads from your production database, applies the anonymiz
 │   Production    │  ────►  │     Clonio       │  ────►  │   Dev / Test /   │
 │    Database     │         │  Anonymization   │         │    Staging DB    │
 └─────────────────┘         └──────────────────┘         └──────────────────┘
-                              ▲
-                    Fake · Mask · Hash · Null · Static
+                                     ▲
+                     Fake · Mask · Hash · Null · Static
 ```
 
 - **Multi-database support** — MySQL, MariaDB, PostgreSQL, SQL Server. Cross-database cloning supported (e.g., MySQL → PostgreSQL).
@@ -56,14 +56,16 @@ Clonio runs **inside your infrastructure**. Your data never leaves your network.
 
 Clonio is **source-available** under the **Clonio Fair Use License (CFUL)**. Our goal is simple: make GDPR-compliant dev environments accessible to everyone — while businesses that benefit commercially contribute to the project's sustainability.
 
-| | **Personal & Open Source** | **Small Business** | **Business** |
-|---|:---:|:---:|:---:|
-| **Price** | **Free** | **€59 / month** | **€199 / month** |
-| **Who** | Individuals, students, hobbyists, open source projects | Companies with up to €1M annual revenue | Companies with over €1M annual revenue |
-| **All features** | ✓ | ✓ | ✓ |
-| **Commercial use** | Non-commercial only | ✓ | ✓ |
-| **Self-hosted** | ✓ | ✓ | ✓ |
-| **Source access** | ✓ | ✓ | ✓ |
+| |                  **Personal & Open Source**                  |           **Small Business**            |              **Business**              |
+|---|:------------------------------------------------------------:|:---------------------------------------:|:--------------------------------------:|
+| **Price** |                           **Free**                           |        **€39 (~~@59~~) / month**        |      **€99 (~~€199~~) / month**       |
+|  |                                                              |            2026 Launch Price            |      2026 Launch Price       |
+|  |                                                              |            €468 / year · billed annually in advance            |      €1188 / year · billed annually in advance       |
+| **Who** | Individuals, students, hobbyists, open source projects, NGOs | Companies with up to €1M annual revenue | Companies with over €1M annual revenue |
+| **All features** |                              ✓                               |                    ✓                    |                   ✓                    |
+| **Commercial use** |                     Non-commercial only                      |                    ✓                    |                   ✓                    |
+| **Self-hosted** |                              ✓                               |                    ✓                    |                   ✓                    |
+| **Source access** |                              ✓                               |                    ✓                    |                   ✓                    |
 
 ### Why this model?
 
@@ -144,7 +146,6 @@ Clonio is built with:
     <a href="https://clonio.dev">Website</a> ·
     <a href="https://clonio.dev/docs">Documentation</a> ·
     <a href="https://github.com/sponsors/clonio-dev">Sponsor</a> ·
-    <a href="https://github.com/clonio-dev/clonio/issues">Issues</a> ·
-    <a href="https://github.com/clonio-dev/clonio/discussions">Discussions</a>
+    <a href="https://github.com/clonio-dev/clonio/issues">Issues</a>
   </sub>
 </p>
