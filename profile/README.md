@@ -4,13 +4,13 @@
 
 <h3 align="center">
   Clone production databases. Anonymize PII. Stay GDPR-compliant.<br/>
-  <sub>Self-hosted. Source-available. Built for teams who care about data privacy.</sub>
+  <sub>A terminal-first CLI. Runs in your infrastructure. MIT licensed.</sub>
 </h3>
 
 <p align="center">
   <a href="https://clonio.dev"><img src="https://img.shields.io/badge/website-clonio.dev-0ea5e9?style=flat-square&labelColor=0f172a" alt="Website"/></a>&nbsp;
-  <a href="https://clonio.dev/docs"><img src="https://img.shields.io/badge/docs-read_the_docs-6366f1?style=flat-square&labelColor=0f172a" alt="Documentation"/></a>&nbsp;
-  <img src="https://img.shields.io/badge/license-Fair_Use-a78bfa?style=flat-square&labelColor=0f172a" alt="License: Clonio Fair Use"/>&nbsp;
+  <a href="https://clonio.dev/docs/getting-started/introduction"><img src="https://img.shields.io/badge/docs-read_the_docs-6366f1?style=flat-square&labelColor=0f172a" alt="Documentation"/></a>&nbsp;
+  <a href="https://github.com/clonio-dev/clonio-cli/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-22c55e?style=flat-square&labelColor=0f172a" alt="License: MIT"/></a>&nbsp;
   <img src="https://img.shields.io/badge/self--hosted-runs_in_your_infra-22d3ee?style=flat-square&labelColor=0f172a" alt="Self-hosted"/>&nbsp;
   <a href="https://github.com/sponsors/clonio-dev"><img src="https://img.shields.io/badge/sponsor-GitHub_Sponsors-ea4aaa?style=flat-square&labelColor=0f172a&logo=githubsponsors&logoColor=ea4aaa" alt="Sponsor on GitHub"/></a>
 </p>
@@ -19,32 +19,35 @@
 
 ## What is Clonio?
 
-**Clonio** is a self-hosted database cloning tool that creates safe, anonymized copies of production databases for development, testing, and staging environments.
+**Clonio** is a command-line tool that clones production-like database data into development, test, staging, and CI environments — applying anonymization, schema synchronization, key remapping, and signed audit logs along the way.
 
 Development teams need production-like data to build and test effectively — but production databases contain personally identifiable information (PII) that **cannot** be used outside production. GDPR, DSGVO, and other privacy regulations make this non-negotiable. A single unmasked email address in a test environment can lead to compliance violations and fines.
 
-Clonio solves this: it reads from your production database, applies the anonymization rules you define, and writes clean, privacy-compliant data to your target environments. Fully automated, fully auditable.
+Clonio solves this: it reads from your source database, applies the transformation rules you define in a `.cloning.yaml` file, synchronizes the target schema where configured, and writes clean, privacy-compliant data to your target environment. Fully automated, fully auditable — straight from the terminal.
+
+There is **no web application to operate**. Clonio is built for terminal-first workflows: local scripts, Docker, Composer, cron jobs, GitHub Actions, GitLab CI, and other pipeline runners.
 
 ### Core Capabilities
 
 ```
 ┌─────────────────┐         ┌──────────────────┐         ┌──────────────────┐
-│   Production    │  ────►  │     Clonio       │  ────►  │   Dev / Test /   │
-│    Database     │         │  Anonymization   │         │    Staging DB    │
+│   Source DB     │  ────►  │   clonio CLI     │  ────►  │   Dev / Test /   │
+│  (production)   │         │  Anonymization   │         │   Staging / CI   │
 └─────────────────┘         └──────────────────┘         └──────────────────┘
                                      ▲
-                     Fake · Mask · Hash · Null · Static
+                     Fake · Mask · Hash · Null · Static · Keep
 ```
 
-- **Multi-database support** — MySQL, MariaDB, PostgreSQL, SQL Server. Cross-database cloning supported (e.g., MySQL → PostgreSQL).
-- **Column-level anonymization** — Replace sensitive columns with fake data, hash values, masked content, null, or static values. Configured per column, per table.
-- **Row selection** — Copy full tables, first X rows, or last X rows. Reduce dataset size while keeping relevant data.
-- **Foreign key awareness** — Child tables are automatically filtered when parent tables use row selection. Referential integrity is always preserved.
-- **Schema replication** — Source schema is inspected and mirrored to the target. New columns and tables are created automatically.
-- **Scheduling & triggers** — Run manually, on a cron schedule, or via API trigger URLs for CI/CD integration.
-- **Webhook notifications** — HTTP webhooks on success or failure for integration with Slack, Teams, or custom workflows.
-- **Signed audit trail** — Every run generates a cryptographically signed (HMAC-SHA256) audit report documenting configuration, execution, and GDPR compliance status. Printable and shareable via public links.
-- **Real-time monitoring** — Live execution console with timestamped logs for every step.
+- **Multi-database support** — MySQL, MariaDB, PostgreSQL, and more. Cross-database cloning supported.
+- **Connection management** — Store source and target connections in a local `clonio.json` file with encrypted passwords.
+- **PII-aware config generation** — Inspect a source database and generate a `.cloning.yaml` with suggested transformations from a built-in PII matcher set.
+- **Column transformations** — Use `fake`, `hash`, `mask`, `null`, `static`, or `keep` strategies per column, per table.
+- **Row selection** — Transfer full tables or only the first/last N rows. Foreign-key aware so referential integrity is preserved.
+- **Schema synchronization** — Create missing tables and optionally add or remove columns/tables on the target.
+- **Key remapping** — Replace primary keys and rewrite foreign keys consistently across the dataset.
+- **Signed audit logs** — Every run produces a cryptographically signed (HMAC-SHA256), tamper-evident audit artefact documenting what was run and which configuration was applied.
+- **Audit delivery channels** — Ship audit logs to local files, stdout/stderr, S3, email, Slack, Microsoft Teams, or ntfy.
+- **CI-friendly execution** — `--ci` mode, meaningful exit codes, Docker, and Composer integration for pipelines.
 
 ### Self-Hosted
 
@@ -52,38 +55,15 @@ Clonio runs **inside your infrastructure**. Your data never leaves your network.
 
 ---
 
-## Licensing — Clonio Fair Use License
+## License
 
-Clonio is **source-available** under the **Clonio Fair Use License (CFUL)**. Our goal is simple: make GDPR-compliant dev environments accessible to everyone — while businesses that benefit commercially contribute to the project's sustainability.
+Clonio CLI is **MIT licensed**. Everyone can use it freely — including commercial users — with no usage restrictions, no per-seat pricing, and no feature gates.
 
-| |                  **Personal & Open Source**                  |           **Small Business**            |              **Business**              |
-|---|:------------------------------------------------------------:|:---------------------------------------:|:--------------------------------------:|
-| **Price** |                           **Free**                           |        **€39 (~~@59~~) / month**        |      **€99 (~~€199~~) / month**       |
-|  |                                                              |            2026 Launch Price            |      2026 Launch Price       |
-|  |                                                              |            €468 / year · billed annually in advance            |      €1188 / year · billed annually in advance       |
-| **Who** | Individuals, students, hobbyists, open source projects, NGOs | Companies with up to €1M annual revenue | Companies with over €1M annual revenue |
-| **All features** |                              ✓                               |                    ✓                    |                   ✓                    |
-| **Commercial use** |                     Non-commercial only                      |                    ✓                    |                   ✓                    |
-| **Self-hosted** |                              ✓                               |                    ✓                    |                   ✓                    |
-| **Source access** |                              ✓                               |                    ✓                    |                   ✓                    |
-
-### Why this model?
-
-**Every open source project should be able to run dev and test stages with GDPR and PII-compliant data.** Privacy compliance shouldn't be a privilege reserved for companies with big budgets. Clonio is free for the open source community — no asterisks, no feature gates.
-
-**Businesses that earn revenue from data on their dev stages should contribute.** If your organization processes production data in non-production environments to build, test, or demo commercial products, Clonio saves you the cost and risk of manual data sanitization. The license fee funds continued development and ensures the tool stays maintained and evolving.
-
-**Fair use means fair for everyone.** You run Clonio on your own servers. You control your own data. The license simply asks commercial users to pay a fair price for the value they receive — no per-seat pricing, no usage metering, no surprise invoices.
-
-> Full license text: [`LICENSE.md`](https://github.com/clonio-dev/clonio/blob/main/LICENSE.md)
+> Full license text: [`LICENSE.md`](https://github.com/clonio-dev/clonio-cli/blob/main/LICENSE.md)
 
 ### Support Clonio via GitHub Sponsors
 
-Commercial licenses and community sponsorships are handled through **[GitHub Sponsors](https://github.com/sponsors/clonio-dev)**. This is the easiest way to get your license and support the project at the same time:
-
-- **Small Business (€59/mo)** and **Business (€199/mo)** tiers are available as sponsorship tiers — your sponsorship _is_ your license.
-- **Community sponsors** at any amount help fund development, documentation, and database driver support.
-- All sponsors get listed as supporters of GDPR-compliant open source tooling.
+There is no pricing plan for the CLI. If Clonio is useful to you or your organization, sponsorships and donations are welcome through **[GitHub Sponsors](https://github.com/sponsors/clonio-dev)**. Sponsorship helps fund ongoing maintenance, new database drivers, better anonymization strategies, and documentation.
 
 <p align="center">
   <a href="https://github.com/sponsors/clonio-dev">
@@ -95,48 +75,59 @@ Commercial licenses and community sponsorships are handled through **[GitHub Spo
 
 ## Getting Started
 
+Download the binary for your platform from the [latest release](https://github.com/clonio-dev/clonio-cli/releases/latest) — the platform binaries are fully self-contained, no PHP required.
+
 ```bash
-# Clone the repository
-git clone https://github.com/clonio-dev/clonio.git
+# macOS (Apple Silicon)
+mv clonio-macos-aarch64 clonio
+chmod +x clonio
+mv clonio /usr/local/bin/clonio
 
-# Install dependencies
-composer install && npm install
+# linux (x86_64/aarch64)
+mv clonio-linux-* clonio
+chmod +x clonio
 
-# Configure your environment
-cp .env.example .env
-php artisan key:generate
-
-# Run migrations
-php artisan migrate
-
-# Build frontend assets
-npm run build
-
-# Start the application
-php artisan serve
+# Then bootstrap Clonio and run your first clone
+clonio init
+clonio connection:add production --production
+clonio connection:add local-dev
+clonio cloning:dump --connection production
+clonio cloning:run production.cloning.yaml --target local-dev
 ```
 
-> See the [Installation Guide](https://clonio.dev/docs/getting-started/installation) for Docker setup, queue worker configuration, and production deployment.
+Prefer Docker, Phar or Composer? Run it as a one-off container or require it as a dev dependency:
+
+```bash
+# Docker
+docker run --rm -v "$(pwd)":/workspace ghcr.io/clonio-dev/clonio:latest --version
+
+# Composer (dev dependency)
+composer require --dev clonio-dev/clonio-cli
+```
+
+> See the [Installation Guide](https://clonio.dev/docs/getting-started/installation) for all platforms, Docker tags, and CI setup.
 
 ---
 
 ## How It Works
 
-1. **Add connections** — Configure your source (production) and target (dev/staging) database credentials.
-2. **Create a cloning** — Select tables, define anonymization rules per column, set row limits, configure scheduling.
-3. **Execute** — Run manually, on schedule, or trigger via API. Clonio replicates the schema, transfers data in chunks, and applies all transformation rules.
-4. **Audit** — Review the cryptographically signed audit trail for compliance documentation.
+1. **Add connections** — Configure your source (production) and target (dev/staging/CI) database credentials in `clonio.json`.
+2. **Generate a config** — Run `cloning:dump` to inspect the source and produce a `.cloning.yaml` with PII-aware transformation suggestions.
+3. **Review & edit** — Tune anonymization strategies per column, set row limits, and configure key remapping in the YAML file.
+4. **Run** — Execute manually or in CI. Clonio synchronizes the schema, transfers data in chunks, and applies all transformation rules.
+5. **Audit** — Review the cryptographically signed audit log for compliance documentation, and deliver it to your chosen channels.
 
 ---
 
-## Tech Stack
+## Documentation
 
-Clonio is built with:
+Full documentation lives at **[clonio.dev](https://clonio.dev)** (served via GitHub Pages):
 
-- **[Laravel](https://laravel.com)** — PHP application framework
-- **[Inertia.js](https://inertiajs.com) + [Vue 3](https://vuejs.org)** — Full-stack SPA without API complexity
-- **[Tailwind CSS](https://tailwindcss.com)** — Utility-first styling
-- **[Pest](https://pestphp.com)** — Elegant PHP testing
+- [Introduction](https://clonio.dev/docs/getting-started/introduction)
+- [Installation](https://clonio.dev/docs/getting-started/installation)
+- [First clone](https://clonio.dev/docs/getting-started/first-clone)
+- [`.cloning.yaml` reference](https://clonio.dev/docs/cloning-config/cloning-yaml-reference)
+- [Command reference](https://clonio.dev/docs/reference/command-reference)
 
 ---
 
@@ -144,8 +135,8 @@ Clonio is built with:
   <sub>Built in Germany. Made for teams who take data privacy seriously.</sub><br/>
   <sub>
     <a href="https://clonio.dev">Website</a> ·
-    <a href="https://clonio.dev/docs">Documentation</a> ·
+    <a href="https://clonio.dev/docs/getting-started/introduction">Documentation</a> ·
     <a href="https://github.com/sponsors/clonio-dev">Sponsor</a> ·
-    <a href="https://github.com/clonio-dev/clonio/issues">Issues</a>
+    <a href="https://github.com/clonio-dev/clonio-cli/issues">Issues</a>
   </sub>
 </p>
